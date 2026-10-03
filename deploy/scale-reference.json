@@ -1,0 +1,30 @@
+{
+  "minReplicas": 0,
+  "maxReplicas": 4,
+  "rules": [
+    {
+      "name": "eventhub-backlog",
+      "custom": {
+        "type": "azure-eventhub",
+        "metadata": {
+          "eventHubName": "demo-events",
+          "consumerGroup": "aca-worker",
+          "blobContainer": "checkpoints",
+          "checkpointStrategy": "blobMetadata",
+          "unprocessedEventThreshold": "100",
+          "activationUnprocessedEventThreshold": "0"
+        },
+        "auth": [
+          {
+            "triggerParameter": "connection",
+            "secretRef": "eventhub-listen"
+          },
+          {
+            "triggerParameter": "storageConnection",
+            "secretRef": "checkpoint-storage"
+          }
+        ]
+      }
+    }
+  ]
+}
